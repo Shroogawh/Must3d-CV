@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+ollama
+PyMuPDF
+pytesseract
+Pillow
+python-docx
+docx2txt
+python-dotenv
+sentence-transformers
+faiss-cpu
