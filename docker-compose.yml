@@ -26,7 +26,7 @@ services:
       - ollama-data:/root/.ollama
     networks:
       - cv-network
-    # أمر لتشغيل Ollama وتحميل الموديل تلقائي
+
     entrypoint: >
       /bin/sh -c "
       ollama pull gemma3:4b &&
