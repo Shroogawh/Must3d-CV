@@ -1,32 +1,41 @@
 version: '3.8'
+
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - OLLAMA_MODEL=gemma3:4b
+      - OLLAMA_HOST=ollama
+      - OLLAMA_PORT=11434
+    depends_on:
+      - ollama
+    volumes:
+      - .:/app
+    networks:
+      - cv-network
+
   ollama:
     image: ollama/ollama:latest
-    container_name: ollama
     ports:
       - "11434:11434"
     volumes:
-      - ollama:/root/.ollama  
-    command: bash -c "ollama serve & sleep 5 && ollama pull gemma3:4b"
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia  
-              count: 1
-              capabilities: [gpu]
+      - ollama-data:/root/.ollama
+    networks:
+      - cv-network
+    # أمر لتشغيل Ollama وتحميل الموديل تلقائي
+    entrypoint: >
+      /bin/sh -c "
+      ollama pull gemma3:4b &&
+      ollama serve --port 11434
+      "
 
-  fastapi:
-    build: .
-    container_name: fastapi-app
-    ports:
-      - "8000:8000"
-    depends_on:
-      - ollama
-    environment:
-      - OLLAMA_BASE_URL=http://ollama:11434  
-    volumes:
-      - .:/app
+networks:
+  cv-network:
+    driver: bridge
 
 volumes:
-  ollama:
+  ollama-data:
