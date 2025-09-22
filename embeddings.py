@@ -5,6 +5,7 @@ embed_model = SentenceTransformer("sentence-transformers/intfloat/multilingual-e
 
 def get_embedding(text: str):
     """
-    تحويل النص إلى vector representation.
+   convert text to vector representation.
     """
     return embed_model.encode(text)
+
