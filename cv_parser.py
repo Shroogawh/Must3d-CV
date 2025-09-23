@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "gemma3:4b")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "tinyllama")
 
 
 
@@ -90,3 +90,4 @@ def parse_cv_with_ai(text: str):
     except Exception as e:
         print("Error calling Ollama:", e)
         return {"error": str(e)}
+
