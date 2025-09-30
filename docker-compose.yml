@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   app:
     build:
@@ -7,40 +8,19 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - OLLAMA_URL=http://ollama:11434  
-      - OLLAMA_MODEL=tinyllama
-      - EMBED_MODEL=intfloat/multilingual-e5-base
-      - EMBED_DIM=768
-      - MAX_CHARS=900
-      - OVERLAP=180
-      - TOP_K=1
-    depends_on:
-      ollama:
-        condition: service_healthy  
+      - OLLAMA_MODEL=gemma3:7b
     volumes:
       - .:/app
-    networks:
-      - cv-network
+    depends_on:
+      - ollama
+
   ollama:
     image: ollama/ollama:latest
     ports:
       - "11434:11434"
     volumes:
       - ollama-data:/root/.ollama
-    environment:
-      - OLLAMA_MODELS=tinyllama
-    command: ["/bin/sh", "-c", "ollama serve & sleep 10 && ollama pull tinyllama && wait"]
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:11434"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-    networks:
-      - cv-network
-
-networks:
-  cv-network:
-    driver: bridge
+    command: serve
 
 volumes:
   ollama-data:
