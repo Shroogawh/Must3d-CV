@@ -1,11 +1,14 @@
 from sentence_transformers import SentenceTransformer
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
-embed_model = SentenceTransformer("sentence-transformers/intfloat/multilingual-e5-base")
+EMBED_MODEL = os.getenv("EMBED_MODEL", "intfloat/multilingual-e5-base")
+embed_model = SentenceTransformer(EMBED_MODEL)
 
 def get_embedding(text: str):
     """
-   convert text to vector representation.
+    تحويل النص إلى تمثيل متجهي.
     """
     return embed_model.encode(text)
-
