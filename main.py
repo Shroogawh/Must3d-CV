@@ -5,9 +5,9 @@ from cv_parser import extract_text, parse_cv_with_ai
 
 app = FastAPI(title="CV Parser with Ollama")
 
-@app.get("/")
-async def root():
-    return {"message": "مرحبًا بك في CV Parser API. استخدم المسار /parse لتحليل السير الذاتية."}
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy"}
 
 @app.post("/parse")
 async def parse_cv(cvfile: UploadFile = File(...)):
