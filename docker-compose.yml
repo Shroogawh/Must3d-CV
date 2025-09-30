@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    environment:
-      - OLLAMA_MODEL=gemma3:7b
+    env_file:
+      - .env
     volumes:
       - .:/app
     depends_on:
