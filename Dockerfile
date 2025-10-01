@@ -13,25 +13,20 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-
 RUN curl -fsSL https://ollama.com/install.sh | sh
-
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-
 COPY . .
 COPY .env .env
 
-
+# البورتين: API (8000) و Ollama (11434)
 EXPOSE 8000
 EXPOSE 11434
-
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
