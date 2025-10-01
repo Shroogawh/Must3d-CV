@@ -9,3 +9,5 @@ services:
       - fromFile: .env
       - key: PYTHONUNBUFFERED
         value: 1
+    healthCheckPath: /
+    healthCheckTimeout: 100
