@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: must3d-cv
+    runtime: docker
+    dockerContext: .
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    envVars:
+      - fromFile: .env
+      - key: PYTHONUNBUFFERED
+        value: 1
